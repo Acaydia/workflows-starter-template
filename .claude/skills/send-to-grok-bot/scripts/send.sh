@@ -2,7 +2,7 @@
 # POST a Grok Bot task (JSON on stdin) to the Grok Bot webhook and print the HTTP status.
 set -euo pipefail
 
-URL="${GROK_BOT_WEBHOOK_URL:-https://api2.cursor.sh/automations/webhook/5cedd7c8-e448-5bae-ba90-7b4b29197e31}"
+URL="${GROK_BOT_WEBHOOK_URL:-https://api2.cursor.sh/automations/webhook/8db9c0c0-76bc-5b4a-b1b4-cb8234ac5810}"
 
 # In Claude Code cloud sessions the key is saved as a network secret for
 # api2.cursor.sh and the proxy injects it, so a placeholder is enough here.
