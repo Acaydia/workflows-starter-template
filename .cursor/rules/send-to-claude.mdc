@@ -1,0 +1,37 @@
+---
+description: How Grok Bot hands a task to Claude ("send to Claude") via the grok-task GitHub webhook
+alwaysApply: false
+---
+---
+
+When I say "send to Claude", or a task should go to Claude, make this HTTP request:
+
+- **POST** `https://api.github.com/repos/Acaydia/workflows-starter-template/dispatches`
+- **Headers:**
+  - `Authorization: Bearer <GITHUB_DISPATCH_TOKEN>` (the GitHub token saved in this routine's secrets)
+  - `Accept: application/vnd.github+json`
+- **JSON body:**
+
+```json
+{
+  "event_type": "grok-task",
+  "client_payload": {
+    "source": "Grok Bot",
+    "task": "<one clear, self-contained description of what Claude should do>",
+    "context": "<links, details, decisions made so far>",
+    "priority": "normal"
+  }
+}
+```
+
+A **204** response means it was accepted. Claude starts right away and posts the
+result as a GitHub issue labeled `from-grok-bot` in Acaydia/workflows-starter-template.
+Tell me the status code, and the issue link once it appears.
+
+Rules:
+- Write the task so it makes sense without our chat.
+- Never put passwords, API keys, tokens or other secrets in the task or context.
+
+Fallback, if the request fails: open a GitHub issue in the same repo labeled
+`for-claude`, titled `[Grok → Claude] <summary>`, with Task / Context / Priority
+sections. Claude picks those up when the user runs /grok-inbox.
