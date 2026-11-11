@@ -4,9 +4,11 @@ set -euo pipefail
 
 URL="${GROK_BOT_WEBHOOK_URL:-https://api2.cursor.sh/automations/webhook/5cedd7c8-e448-5bae-ba90-7b4b29197e31}"
 
+# In Claude Code cloud sessions the key is saved as a network secret for
+# api2.cursor.sh and the proxy injects it, so a placeholder is enough here.
 if [[ -z "${GROK_BOT_SENDER_KEY:-}" ]]; then
-  echo "ERROR: GROK_BOT_SENDER_KEY is not set." >&2
-  exit 2
+  echo "NOTE: GROK_BOT_SENDER_KEY not set; relying on a proxy-injected credential." >&2
+  GROK_BOT_SENDER_KEY="proxy-injected"
 fi
 
 body="$(cat)"
